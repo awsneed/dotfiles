@@ -1,0 +1,98 @@
+# shellcheck shell=sh
+# ~/.profile: executed by the command interpreter for login shells.
+# This should stay shell-agnostic, so aim for sh-compatible
+
+PROFILE_READS=$(( PROFILE_READS + 1 ))
+export PROFILE_READS
+
+if [ $PROFILE_READS -gt 1 ]; then
+        echo 'WARNING: .profile has been sourced more than once!'
+fi
+
+# User binaries
+if [ -d "${HOME}/.local/bin" ]; then
+        PATH="${HOME}/.local/bin:${PATH}"; export PATH
+fi
+
+if [ -d "${HOME}/bin" ] ; then
+        PATH="${HOME}/bin:${PATH}"; export PATH
+fi
+
+# System local admin install of go
+if [ -d "/usr/local/go/bin" ]; then
+        PATH=/usr/local/go/bin:$PATH; export PATH
+fi
+
+# homebrew macOS: man-db
+if [ -d "/opt/homebrew/opt/man-db/libexec/bin" ]; then
+        PATH="/opt/homebrew/opt/man-db/libexec/bin:$PATH"; export PATH
+fi
+
+# homebrew macOS: coreutils
+if [ -d "/opt/homebrew/opt/coreutils/libexec/gnubin" ]; then
+        PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"; export PATH
+fi
+
+# homebrew macOS: ncurses
+if [ -d "/opt/homebrew/opt/ncurses/bin" ]; then
+        PATH="/opt/homebrew/opt/ncurses/bin:$PATH"; export PATH
+fi
+
+# homebrew macOS
+if [ -x "/opt/homebrew/bin/brew" ]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# rust
+if [ -r "${HOME}/.cargo/env" ]; then
+        . "$HOME/.cargo/env"
+fi
+
+# lesspipe
+if [ -x "$(command -v lesspipe)" ]; then
+        eval "$(lesspipe)"
+fi
+
+# homebrew macOS: lesspipe
+if [ -f "/opt/homebrew/bin/lesspipe.sh" ]; then
+        LESSOPEN="|/opt/homebrew/bin/lesspipe.sh %s"; export LESSOPEN
+fi
+
+# dircolors
+if [ -x "$(command -v dircolors)" ]; then
+        [ -r "~/.dircolors" ] && 
+                eval "$(dircolors -b ~/.dircolors)" ||
+                eval "$(dircolors -b)"
+fi
+
+# homebrew macOS: ncurses terminfo
+if [ -d "/opt/homebrew/opt/ncurses/share/terminfo" ]; then
+        TERMINFO_DIRS="/opt/homebrew/opt/ncurses/share/terminfo"; export TERMINFO_DIRS
+fi
+
+# colored GCC warnings and errors
+GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'; export GCC_COLORS
+
+# Default visual and editor to vim / vi
+if [ -x $(command -v vim) ]; then
+        VISUAL='vim'
+        EDITOR='vim -e'
+else
+        # Assume vi is everywhere. God help me if it's not
+        VISUAL='vi'
+        EDITOR='vi -e'
+fi; export VISUAL EDITOR
+
+# Locale / timezone
+TZ='America/Chicago'; export TZ
+
+# less starts in "secure mode"
+LESSSECURE=1; export LESSSECURE
+
+# GnuPG + SSH Agent
+gpg-connect-agent /bye >/dev/null
+unset -v SSH_AGENT_PID
+if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+        SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+        export SSH_AUTH_SOCK
+fi

@@ -1,0 +1,23 @@
+# shellcheck shell=bash
+# ~/.bash_profile: executed by bash(1) for login shells.
+
+(( BASH_PROFILE_READS++ ))
+export BASH_PROFILE_READS
+
+if [[ BASH_PROFILE_READS -gt 1 ]]; then
+        echo 'WARNING: .bash_profile has been sourced more than once!'
+fi
+
+# I think the best order is
+#   1. .profile < Not normally called if .bash_profile exists
+#   2. .bash_profile < Current file; only login shells
+#   3. .bashrc < Only non-login shells
+# .bash_profile and .profile should be called once at most
+
+# Source shell-agnostic profile
+[[ -f ~/.profile ]] && . ~/.profile
+
+# Probably insert any customizations here between .profile and .bashrc
+
+# Source bashrc non-login shell settings
+[[ -f ~/.bashrc ]] && . ~/.bashrc
