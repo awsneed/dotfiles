@@ -134,5 +134,11 @@ gpg-connect-agent updatestartuptty /bye >/dev/null
 # homebrew macOS: bash-completion@3
 [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
 
+## Aliases
 alias ssh-keygen-mozilla='ssh-keygen -t ed25519'
 alias ssh-keygen-mozilla-legacy='ssh-keygen -t rsa -b 4096'
+
+if [[ -x "$(command -v usbipd.exe)" ]]; then
+        alias attach-yubikey='usbipd.exe attach --wsl -i 1050:0407'
+        alias detach-yubikey='usbipd.exe detach -i 1050:0407'
+fi
