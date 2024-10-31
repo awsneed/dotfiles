@@ -94,6 +94,9 @@ autocmd FileType javascript setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType java       setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType xml        setlocal ts=2 sts=2 sw=2 expandtab
 
+" Solarized
+colorscheme solarized
+
 " Truecolor support
 "if exists('+termguicolors')
         "set termguicolors
@@ -104,9 +107,6 @@ autocmd FileType xml        setlocal ts=2 sts=2 sw=2 expandtab
 " Solarized8
 " set background=light
 " colorscheme solarized8
-
-" Solarized
-colorscheme solarized
 
 " Old crap I need to sort through and selectively bring back in probably
 " XDG Base Dir is officially coming in a newer version. Need to find that and
