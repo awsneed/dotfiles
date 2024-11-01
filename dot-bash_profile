@@ -22,8 +22,8 @@ fi
 # Source bashrc non-login shell settings
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
-# Attach to or create a default tmux session unless in vs code
-if [[ -x "$(command -v tmux)" ]] && [[ -z "$VSCODE_SHELL_INTEGRATION" ]]; then
+# Attach to or create a default tmux session when logging in via SSH
+if [[ -x "$(command -v tmux)" ]] && [[ -n "$SSH_CONNECTION" ]]; then
         echo "Launching tmux..."
         tmux new-session -A -s "0"
 fi
