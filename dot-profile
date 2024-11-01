@@ -97,3 +97,7 @@ if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ] && [ -z ${SSH_CONNECTION} ]; then
         SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
         export SSH_AUTH_SOCK
 fi
+
+## Host-specific config handling
+# Leave this at the end
+[ -f "$HOME/.profile.local" ] && . "$HOME/.profile.local"

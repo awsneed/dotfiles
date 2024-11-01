@@ -27,3 +27,7 @@ if [[ -x "$(command -v tmux)" ]] && [[ -n "$SSH_CONNECTION" ]]; then
         echo "Launching tmux..."
         tmux new-session -A -s "0"
 fi
+
+## Host-specific config handling
+# Leave this at the end
+[[ -f ~/.bash_profile.local ]] && . ~/.bash_profile.local

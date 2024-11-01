@@ -150,3 +150,7 @@ alias view-most-logs="sudo bash -c 'tail -n +0 -F /var/log/*.log'"
 
 # Auto reflinks with cp
 alias cp='cp --reflink=auto'
+
+## Host-specific config handling
+# Leave this at the end
+[[ -f ~/.bashrc.local ]] && . ~/.bashrc.local
