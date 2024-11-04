@@ -13,4 +13,7 @@ Host *
         # Requires AcceptEnv on the server
         SendEnv COLORTERM COLORFGBG
 
+        # Show ASCII art form of host keys
+        VisualHostKey yes
+
 # vim: set filetype=sshconfig:
