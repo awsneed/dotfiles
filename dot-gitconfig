@@ -1,4 +1,14 @@
 [user]
-	name = Adam Sneed
-	email = awsneed@uark.edu
-	signingkey = 298F0C5349AB08A1E1CC58B6B9BF19E6E2D0F6C5
+        name = Adam Sneed
+        email = awsneed@uark.edu
+        signingkey = 298F0C5349AB08A1E1CC58B6B9BF19E6E2D0F6C5
+
+[commit]
+        gpgSign = true
+
+[push]
+        # Not supported by github, apparently
+        #gpgSign = true
+
+[tag]
+        gpgSign = true
