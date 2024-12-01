@@ -3,6 +3,9 @@
 \.gitignore
 \.gitmodules
 
+# Mac cruft
+\.DS_Store
+
 # Repo essentials
 ^/README.*
 ^/LICENSE.*
