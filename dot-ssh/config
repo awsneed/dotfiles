@@ -1,0 +1,5 @@
+# This setup is neccessary for an easy default + local config setup
+
+Include config.defaults
+
+Include config.local
