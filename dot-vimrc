@@ -96,7 +96,11 @@ autocmd FileType xml        setlocal ts=2 sts=2 sw=2 expandtab
 
 " Solarized
 colorscheme solarized
-let g:solarized_termcolors=8
+
+" Anti-flashbang protocol
+if empty($COLORFGBG)
+        set background=dark
+endif
 
 " Truecolor support
 "if exists('+termguicolors')
