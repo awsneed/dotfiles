@@ -134,6 +134,9 @@ GPG_TTY=$(tty)
 export GPG_TTY
 gpg-connect-agent updatestartuptty /bye >/dev/null
 
+# Update active tty for ssh per-invocation
+alias ssh='export GPG_TTY=$(tty) && gpg-connect-agent updatestartuptty /bye >/dev/null && ssh'
+
 # homebrew macOS: bash-completion@3
 [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
 
