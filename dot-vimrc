@@ -95,6 +95,14 @@ autocmd FileType java       setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType xml        setlocal ts=2 sts=2 sw=2 expandtab
 
 " Solarized
+"let g:solarized_termcolors=256
+"let g:solarized_termtrans=1
+"let g:solarized_degrade=1
+"let g:solarized_bold=0
+"let g:solarized_underline=0
+"let g:solarized_italic=0
+"let g:solarized_contrast="high"
+"let g:solarized_visibility="high"
 colorscheme solarized
 
 " Anti-flashbang protocol
