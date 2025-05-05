@@ -65,6 +65,9 @@ if [ -x "$(command -v dircolors)" ]; then
                 eval "$(dircolors -b)"
 fi
 
+# fix dircolors for Selenized
+export LS_COLORS="$LS_COLORS:ow=1;7;34:st=30;44:su=30;41"
+
 # homebrew macOS: ncurses terminfo
 if [ -d "/opt/homebrew/opt/ncurses/share/terminfo" ]; then
         TERMINFO_DIRS="/opt/homebrew/opt/ncurses/share/terminfo"; export TERMINFO_DIRS
