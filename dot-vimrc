@@ -62,7 +62,7 @@ augroup END
 " The fish shell is not very compatible to other shells and unexpectedly
 " breaks things that use 'shell'.
 if &shell =~# 'fish$'
-  set shell=/bin/bash
+        set shell=/bin/bash
 endif
 
 " GUI Options
@@ -104,18 +104,10 @@ if empty($COLORFGBG)
         set background=dark
 endif
 
-" Truecolor support
-"if exists('+termguicolors')
-        "set termguicolors
-        "let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-        "let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-"endif
 
 " Old crap I need to sort through and selectively bring back in probably
 " XDG Base Dir is officially coming in a newer version. Need to find that and
 " craft my vimrc to match, so the update will be seamless with defaults
-
-
 
 " Conform to XDG Base Dir spec
 "set runtimepath^=$XDG_CONFIG_HOME/vim
@@ -149,4 +141,3 @@ endif
 "set viminfo     ='100,n$HOME/.vim/files/info/viminfo
 
 "set number  " Line numbers
-
