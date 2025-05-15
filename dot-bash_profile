@@ -25,13 +25,15 @@ fi
 # Attach to or create a default tmux session when logging in via SSH
 if [[ -x "$(command -v tmux)" ]] && [[ -n "$SSH_CONNECTION" ]]; then
         session_name='0'
+
         case $TERM_PROGRAM in
                 vscode) session_name=$TERM_PROGRAM ;;
         esac
 
         echo "Launching tmux session '$session_name'..."
 
-        tmux new-session -A -s "$session_name"
+        # -D with -A disconnects other clients
+        tmux new-session -A -D -s "$session_name"
 fi
 
 ## Host-specific config handling
