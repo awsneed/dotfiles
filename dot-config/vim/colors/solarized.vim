@@ -1,1 +1,0 @@
-/Users/awsneed/src/github.com/altercation/solarized/vim-colors-solarized/colors/solarized.vim
