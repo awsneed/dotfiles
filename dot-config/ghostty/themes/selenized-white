@@ -1,0 +1,65 @@
+# black; bg_1
+palette = 0=#ebebeb
+
+# red; red
+palette = 1=#d6000c
+
+# green; green
+palette = 2=#1d9700
+
+# yellow; yellow
+palette = 3=#c49700
+
+# blue; blue
+palette = 4=#0064e4
+
+# magenta; magenta
+palette = 5=#dd0f9d
+
+# cyan; cyan
+palette = 6=#00ad9c
+
+# white; dim_0
+palette = 7=#878787
+
+# bright black; bg_2
+palette = 8=#cdcdcd
+
+# bright red; br_red
+palette = 9=#bf0000
+
+# bright green; br_green
+palette = 10=#008400
+
+# bright yellow; br_yellow
+palette = 11=#af8500
+
+# bright blue; br_blue
+palette = 12=#0054cf
+
+# bright magenta; br_magenta
+palette = 13=#c7008b
+
+# bright cyan; br_cyan
+palette = 14=#009a8a
+
+# bright white; fg_1
+palette = 15=#282828
+
+# background; bg_0
+background = #ffffff
+
+# foreground; fg_0
+foreground = #474747
+
+# cursor color; fg_1
+cursor-color = #282828
+
+# ?; ?
+#cursor-text = #
+
+# selection; bg_2
+selection-background = #cdcdcd
+
+# ?; ?
+#selection-foreground = #c6d0f5

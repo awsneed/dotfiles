@@ -1,0 +1,34 @@
+font-family             = "SourceCodeVF Regular"
+font-family-bold        = "SourceCodeVF Bold"
+font-family-italic      = "SourceCodeVF Italic Italic"
+font-family-bold-italic = "SourceCodeVF Bold Italic"
+
+# Disable all ligatures. This is a terminal.
+font-feature = -calt
+font-feature = -liga
+font-feature = -dlig
+
+# Size in pixels. On macOS, this is the pre-scaling. So 18 will really be 36
+font-size = 18
+
+# Will switch based on macOS Dark Mode
+#theme = light:"Builtin Solarized Light",dark:"Builtin Solarized Dark"
+theme = light:"selenized-white",dark:"selenized-black"
+
+window-theme = auto
+window-height = 24
+window-width = 80
+
+# Prevent Ghostty from assuming some cursor styles (worse than just readline)
+shell-integration-features = no-cursor
+
+# This is some historical wide-spread hack that ideally should be off
+bold-is-bright = false
+
+# Default cursor style. Shell can still change it
+cursor-style = block
+
+# Seems like the default is 132.5% of the font size already. Neat
+# The below commented out lines will set it to about 100%
+#adjust-cell-height = -24.52830189%
+#adjust-cursor-height = -24.52830189%
