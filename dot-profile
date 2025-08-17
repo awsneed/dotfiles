@@ -38,6 +38,11 @@ if [ -d "/opt/homebrew/opt/ncurses/bin" ]; then
         PATH="/opt/homebrew/opt/ncurses/bin:$PATH"; export PATH
 fi
 
+# homebrew macOS: llvm
+if [ -d "/opt/homebrew/opt/llvm/bin" ]; then
+        PATH="/opt/homebrew/opt/llvm/bin:$PATH"; export PATH
+fi
+
 # homebrew macOS
 if [ -x "/opt/homebrew/bin/brew" ]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"
