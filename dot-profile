@@ -43,6 +43,14 @@ if [ -d "/opt/homebrew/opt/llvm/bin" ]; then
         PATH="/opt/homebrew/opt/llvm/bin:$PATH"; export PATH
 fi
 
+# MacPorts
+if [ -d "/opt/local/bin" ]; then
+        PATH="/opt/local/bin:$PATH"; export PATH
+fi
+if [ -d "/opt/local/sbin" ]; then
+        PATH="/opt/local/sbin:$PATH"; export PATH
+fi
+
 # homebrew macOS
 if [ -x "/opt/homebrew/bin/brew" ]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"
