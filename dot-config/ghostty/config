@@ -1,7 +1,7 @@
-font-family             = "SourceCodeVF Regular"
-font-family-bold        = "SourceCodeVF Bold"
-font-family-italic      = "SourceCodeVF Italic Italic"
-font-family-bold-italic = "SourceCodeVF Bold Italic"
+font-family             = "Source Code Pro Regular"
+font-family-bold        = "Source Code Pro Bold"
+font-family-italic      = "Source Code Pro Italic Italic"
+font-family-bold-italic = "Source Code Pro Bold Italic"
 
 # Disable all ligatures. This is a terminal.
 font-feature = -calt

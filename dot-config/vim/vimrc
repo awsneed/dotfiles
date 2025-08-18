@@ -82,7 +82,10 @@ if has("gui_running")
         " Font setup
         if has("gui_win32")
                 " Windows
-                :set guifont=Source_Code_Pro:h11:cDEFAULT:qDEFAULT
+                :set guifont=Source_Code_Pro:h11
+        elseif has ("mac")
+                " Mac
+                :set guifont=SourceCodePro-Regular:h15
         else
                 " Else
                 :set guifont=Monospace\ 11
