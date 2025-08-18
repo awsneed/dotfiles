@@ -12,3 +12,7 @@
 
 [tag]
         gpgSign = true
+[init]
+	defaultBranch = main
+[pull]
+	ff = only
