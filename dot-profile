@@ -38,6 +38,11 @@ if [ -d "/opt/homebrew/opt/ncurses/bin" ]; then
         PATH="/opt/homebrew/opt/ncurses/bin:$PATH"; export PATH
 fi
 
+# Add .NET Core SDK tools
+if [ -d "~/.dotnet/tools" ]; then
+        PATH="/home/awsneed/.dotnet/tools:$PATH"; export PATH
+fi
+
 # homebrew macOS
 if [ -x "/opt/homebrew/bin/brew" ]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"
