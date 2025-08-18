@@ -162,6 +162,11 @@ alias view-most-logs="sudo bash -c 'tail -n +0 -F /var/log/*.log'"
 # Auto reflinks with cp
 alias cp='cp --reflink=auto'
 
+# pacman colors
+if type -P pacman >/dev/null; then
+        alias pacman='pacman --color auto'
+fi
+
 ## Host-specific config handling
 # Leave this at the end
 [[ -f ~/.bashrc.local ]] && . ~/.bashrc.local
