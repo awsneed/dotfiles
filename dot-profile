@@ -5,22 +5,22 @@
 PROFILE_READS=$(( PROFILE_READS + 1 ))
 export PROFILE_READS
 
-if [ $PROFILE_READS -gt 1 ]; then
+if [ "$PROFILE_READS" -gt 1 ]; then
         echo 'WARNING: .profile has been sourced more than once!'
 fi
 
 # User binaries
-if [ -d "${HOME}/.local/bin" ]; then
-        PATH="${HOME}/.local/bin:${PATH}"; export PATH
+if [ -d "$HOME/.local/bin" ]; then
+        PATH="$HOME/.local/bin:$PATH"; export PATH
 fi
 
-if [ -d "${HOME}/bin" ] ; then
-        PATH="${HOME}/bin:${PATH}"; export PATH
+if [ -d "$HOME/bin" ] ; then
+        PATH="$HOME/bin:$PATH"; export PATH
 fi
 
 # System local admin install of go
 if [ -d "/usr/local/go/bin" ]; then
-        PATH=/usr/local/go/bin:$PATH; export PATH
+        PATH="/usr/local/go/bin:$PATH"; export PATH
 fi
 
 # homebrew macOS: man-db
@@ -39,7 +39,7 @@ if [ -d "/opt/homebrew/opt/ncurses/bin" ]; then
 fi
 
 # Add .NET Core SDK tools
-if [ -d "~/.dotnet/tools" ]; then
+if [ -d "$HOME/.dotnet/tools" ]; then
         PATH="/home/awsneed/.dotnet/tools:$PATH"; export PATH
 fi
 
@@ -62,12 +62,12 @@ if [ -x "/opt/homebrew/bin/brew" ]; then
 fi
 
 # rust
-if [ -r "${HOME}/.cargo/env" ]; then
+if [ -r "$HOME/.cargo/env" ]; then
         . "$HOME/.cargo/env"
 fi
 
 # lesspipe
-if [ -x "$(command -v lesspipe)" ]; then
+if command -v lesspipe >/dev/null; then
         eval "$(lesspipe)"
 fi
 
@@ -77,10 +77,8 @@ if [ -f "/opt/homebrew/bin/lesspipe.sh" ]; then
 fi
 
 # dircolors
-if [ -x "$(command -v dircolors)" ]; then
-        [ -r "~/.dircolors" ] && 
-                eval "$(dircolors -b ~/.dircolors)" ||
-                eval "$(dircolors -b)"
+if command -v dircolors >/dev/null && [ -r "$HOME/.dircolors" ]; then
+        eval "$(dircolors -b "$HOME/.dircolors")" || eval "$(dircolors -b)"
 fi
 
 # fix dircolors for Selenized
@@ -95,14 +93,15 @@ fi
 GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'; export GCC_COLORS
 
 # Default visual and editor to vim / vi
-if [ -x $(command -v vim) ]; then
+if command -v vim >/dev/null; then
         VISUAL='vim'
         EDITOR='vim -e'
 else
         # Assume vi is everywhere. God help me if it's not
         VISUAL='vi'
         EDITOR='vi -e'
-fi; export VISUAL EDITOR
+fi
+export VISUAL EDITOR
 
 # Locale / timezone
 TZ='America/Chicago'; export TZ
@@ -114,7 +113,7 @@ LESSSECURE=1; export LESSSECURE
 gpg-connect-agent /bye >/dev/null
 unset -v SSH_AGENT_PID
 # Don't set this on SSH logins, because ssh agent forwarding may need to
-if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ] && [ -z "${SSH_CONNECTION}" ]; then
+if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ] && [ -z "$SSH_CONNECTION" ]; then
         SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
         export SSH_AUTH_SOCK
 fi
@@ -122,3 +121,4 @@ fi
 ## Host-specific config handling
 # Leave this at the end
 [ -f "$HOME/.profile.local" ] && . "$HOME/.profile.local"
+

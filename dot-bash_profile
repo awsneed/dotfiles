@@ -4,38 +4,24 @@
 (( BASH_PROFILE_READS++ ))
 export BASH_PROFILE_READS
 
-if [[ BASH_PROFILE_READS -gt 1 ]]; then
+if [[ "$BASH_PROFILE_READS" -gt 1 ]]; then
         echo 'WARNING: .bash_profile has been sourced more than once!'
 fi
 
 # I think the best order is
-#   1. .profile < Not normally called if .bash_profile exists
-#   2. .bash_profile < Current file; only login shells
-#   3. .bashrc < Only non-login shells
-# .bash_profile and .profile should be called once at most
+#       1. ~/.profile < Not normally called if ~/.bash_profile exists
+#       2. ~/.bash_profile < Current file; only login shells
+#       3. ~/.bashrc < Only non-login shells
+# .bash_profile and .profile should be called once each at most
 
 # Source shell-agnostic profile
-[[ -f ~/.profile ]] && . ~/.profile
+[[ -f "$HOME/.profile" ]] && . "$HOME/.profile"
 
-# Probably insert any customizations here between .profile and .bashrc
+# Place customizations here
+
+# Host-specific config handling
+[[ -f "$HOME/.bash_profile.local" ]] && . "$HOME/.bash_profile.local"
 
 # Source bashrc non-login shell settings
-[[ -f ~/.bashrc ]] && . ~/.bashrc
+[[ -f "$HOME/.bashrc" ]] && . "$HOME/.bashrc"
 
-# Attach to or create a default tmux session when logging in via SSH
-if [[ -x "$(command -v tmux)" ]] && [[ -n "$SSH_CONNECTION" ]]; then
-        session_name='0'
-
-        case $TERM_PROGRAM in
-                vscode) session_name=$TERM_PROGRAM ;;
-        esac
-
-        echo "Launching tmux session '$session_name'..."
-
-        # -D with -A disconnects other clients
-        tmux new-session -A -D -s "$session_name"
-fi
-
-## Host-specific config handling
-# Leave this at the end
-[[ -f ~/.bash_profile.local ]] && . ~/.bash_profile.local
