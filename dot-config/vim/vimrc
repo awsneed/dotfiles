@@ -44,18 +44,14 @@ else
 endif
 
 " Cursor shape changes in terminals
-if &term =~# 'linux$'
-        let &t_SI = "\e[?0c"
-        " Don't know the underscore code for linux terminal yet
-        "let &t_SR = "\e[?0c"
-        let &t_EI = "\e[?8c"
-else
-        let &t_SI = "\e[5 q"
-        let &t_SR = "\e[3 q"
-        let &t_EI = "\e[1 q"
+" https://invisible-island.net/xterm/ctlseqs/ctlseqs.html
+if &term !~# 'linux$'
+        let &t_EI = "\e[1 q" " Normal = blinking box
+        let &t_SI = "\e[5 q" " Insert = blinking bar
+        let &t_SR = "\e[3 q" " Replace = blinking underline
 endif
 
-" Fixing cursor stuff on enter
+" Fixing cursor shape on enter
 augroup ResetCursorShape
         autocmd!
         autocmd VimEnter * normal! :startinsert :stopinsert
@@ -82,13 +78,12 @@ if has("gui_running")
         " Font setup
         if has("gui_win32")
                 " Windows
-                :set guifont=Source_Code_Pro:h11
-        elseif has ("mac")
+                set guifont=Source_Code_Pro:h15
+        elseif has("gui_mac")
                 " Mac
-                :set guifont=SourceCodePro-Regular:h15
+                set guifont=SourceCodePro-Regular:h15
         else
-                " Else
-                :set guifont=Monospace\ 11
+                set guifont=Source\ Code\ Pro\ 15
         endif
 
 endif
@@ -99,8 +94,6 @@ autocmd FileType javascript setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType java       setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType xml        setlocal ts=2 sts=2 sw=2 expandtab
 
-" Force 16 colors (more consistent this way)
-set t_Co=16
 " Selenized (better Solarized)
 silent! colorscheme selenized_bw
 
