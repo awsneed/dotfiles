@@ -88,11 +88,21 @@ if has("gui_running")
 
 endif
 
+set textwidth=80           " Auto-format to 80 columns
+
 " Custom file type options
-autocmd FileType html       setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType javascript setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType java       setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType xml        setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType html       setlocal ts=2 sts=2 sw=2 expandtab textwidth=80
+autocmd FileType javascript setlocal ts=2 sts=2 sw=2 expandtab textwidth=80
+autocmd FileType typescript setlocal ts=2 sts=2 sw=2 expandtab textwidth=80
+autocmd FileType java       setlocal ts=2 sts=2 sw=2 expandtab textwidth=80
+autocmd FileType xml        setlocal ts=2 sts=2 sw=2 expandtab textwidth=80
+autocmd FileType python     setlocal ts=2 sts=2 sw=2 expandtab textwidth=79
+autocmd FileType cpp        setlocal ts=4 sts=4 sw=4 expandtab textwidth=80
+autocmd FileType c          setlocal ts=8 sts=8 sw=8 expandtab textwidth=80
+autocmd FileType rust       setlocal ts=8 sts=8 sw=8 expandtab textwidth=100
+autocmd FileType text       setlocal ts=8 sts=8 sw=8 expandtab textwidth=72
+
+set cc=+1                  " Highlight the column after textwidth
 
 " Selenized (better Solarized)
 silent! colorscheme selenized_bw
