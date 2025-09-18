@@ -1,7 +1,7 @@
 ! Selenized color scheme for xterm
 #include "/home/awsneed/src/github.com/jan-warchol/selenized/terminals/xterm/selenized-white.xdefaults"
 
-! Custom
+*customization: -color
 xterm*faceName: Source Code Pro
 xterm*faceSize: 15
 xterm.vt100.saveLines: 4096
