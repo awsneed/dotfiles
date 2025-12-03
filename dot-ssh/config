@@ -1,9 +1,10 @@
-# Include any local config options and have them override the defaults here
+# Include any config options under .ssh/config.local and override these defaults
 # Loading it first ensures they take priority
 Include config.local
 
 ## Mozilla OpenSSH Guidelines
-# Ensure KnownHosts are unreadable if leaked - it is otherwise easier to know which hosts your keys have access to.
+# Ensure KnownHosts are unreadable if leaked - it is otherwise easier to know
+# which hosts your keys have access to.
 HashKnownHosts yes
 
 # Host keys the client accepts - order here is honored by OpenSSH
@@ -12,10 +13,12 @@ KexAlgorithms curve25519-sha256@libssh.org,ecdh-sha2-nistp521,ecdh-sha2-nistp384
 MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com
 Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
 
-## colorterm
 Host *
         # Requires AcceptEnv on the server
-        SendEnv COLORTERM COLORFGBG
+        # Debian Trixie defaults
+        SendEnv LANG LC_* COLORTERM NO_COLOR
+        # Additional color support
+        SendEnv COLORFGBG 
 
         # Show ASCII art form of host keys
         VisualHostKey yes

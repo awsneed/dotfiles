@@ -79,7 +79,7 @@ if has("gui_running")
         if has("gui_win32")
                 " Windows
                 set guifont=Source_Code_Pro:h15
-        elseif has("gui_mac")
+        elseif has("gui_mac") || has("gui_macvim")
                 " Mac
                 set guifont=SourceCodePro-Regular:h15
         else
@@ -101,6 +101,7 @@ autocmd FileType cpp        setlocal ts=4 sts=4 sw=4 expandtab textwidth=80
 autocmd FileType c          setlocal ts=8 sts=8 sw=8 expandtab textwidth=80
 autocmd FileType rust       setlocal ts=8 sts=8 sw=8 expandtab textwidth=100
 autocmd FileType text       setlocal ts=8 sts=8 sw=8 expandtab textwidth=72
+autocmd FileType ps1        setlocal ts=4 sts=4 sw=4 expandtab textwidth=115
 
 set cc=+1                  " Highlight the column after textwidth
 
@@ -114,12 +115,12 @@ if empty($COLORFGBG)
 endif
 
 " Conform to XDG Base Dir spec
-let $XDG_DATA_HOME   = $XDG_DATA_HOME   ?? $"{$HOME}/.local/share"
-let $XDG_DATA_DIRS   = $XDG_DATA_DIRS   ?? '/usr/local/share:/usr/share'
-let $XDG_CONFIG_HOME = $XDG_CONFIG_HOME ?? $"{$HOME}/.config"
-let $XDG_CONFIG_DIRS = $XDG_CONFIG_DIRS ?? '/etc/xdg'
-let $XDG_STATE_HOME  = $XDG_STATE_HOME  ?? $"{$HOME}/.local/state"
-let $XDG_CACHE_HOME  = $XDG_CACHE_HOME  ?? $"{$HOME}/.cache"
+if ! $XDG_DATA_HOME   | let $XDG_DATA_HOME   = $HOME . '/.local/share' | endif
+if ! $XDG_DATA_DIRS   | let $XDG_DATA_DIRS   = '/usr/local/share:/usr/share' | endif
+if ! $XDG_CONFIG_HOME | let $XDG_CONFIG_HOME = $HOME . '/.config' | endif
+if ! $XDG_CONFIG_DIRS | let $XDG_CONFIG_DIRS = '/etc/xdg' | endif
+if ! $XDG_STATE_HOME  | let $XDG_STATE_HOME  = $HOME . '/.local/state' | endif
+if ! $XDG_CACHE_HOME  | let $XDG_CACHE_HOME  = $HOME . '/.cache' | endif
 
 set runtimepath^=$XDG_CONFIG_HOME/vim
 set runtimepath+=$XDG_DATA_HOME/vim

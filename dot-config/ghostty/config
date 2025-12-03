@@ -1,15 +1,23 @@
-font-family             = "Source Code Pro Regular"
-font-family-bold        = "Source Code Pro Bold"
-font-family-italic      = "Source Code Pro Italic Italic"
-font-family-bold-italic = "Source Code Pro Bold Italic"
+# Prefer non-variable
+font-family = "Source Code Pro"
+
+# Fallback to variable
+font-family = "SourceCodeVF"
+
+# Force-disable synthetic styles; let's fix the font-family setting instead
+font-synthetic-style = false
 
 # Disable all ligatures. This is a terminal.
 font-feature = -calt
 font-feature = -liga
 font-feature = -dlig
 
-# Size in pixels. On macOS, this is the pre-scaling. So 18 will really be 36
-font-size = 18
+# Size in "points" (BS, it's actually arbitrary)
+# Macbook: Screen is about 15 in away
+#       Point size = font-size / 1.8212083847 (as of build 12119 on Tahoe)
+#       10.97 pt target loosely based on Sanders and McCormick, 1993
+#       19.9786559802 should be about 10.97 pt
+font-size = 19.9786559802
 
 # Will switch based on macOS Dark Mode
 #theme = light:"Builtin Solarized Light",dark:"Builtin Solarized Dark"
@@ -28,7 +36,10 @@ bold-is-bright = false
 # Default cursor style. Shell can still change it
 cursor-style = block
 
-# Seems like the default is 132.5% of the font size already. Neat
-# The below commented out lines will set it to about 100%
-#adjust-cell-height = -24.52830189%
-#adjust-cursor-height = -24.52830189%
+# Matthew Butterick's Practical Typography: 120% - 145% line spacing
+# Default seems to be about 130% - 132.5%, which is pretty much perfect
+#adjust-cell-height   = 1.0%
+#adjust-cursor-height = 1.0%
+#adjust-icon-height   = 1.0%
+
+keybind = global:cmd+backquote=toggle_quick_terminal
