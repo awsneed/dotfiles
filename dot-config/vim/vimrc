@@ -48,7 +48,9 @@ endif
 if &term !~# 'linux$'
         let &t_EI = "\e[1 q" " Normal = blinking box
         let &t_SI = "\e[5 q" " Insert = blinking bar
-        let &t_SR = "\e[3 q" " Replace = blinking underline
+        if exists('+t_SR')
+                let &t_SR = "\e[3 q" " Replace = blinking underline
+        endif
 endif
 
 " Fixing cursor shape on enter
@@ -109,47 +111,58 @@ set cc=+1                  " Highlight the column after textwidth
 silent! colorscheme selenized_bw
 
 " Anti-flashbang protocol 2.0
-if empty($COLORFGBG) 
-        \ && exists("*strftime") && (strftime("%H")>=17 || strftime("%H")<8)
-        set background=dark
+if empty($COLORFGBG)
+        if exists("*strftime")
+                if (strftime("%H")>=17 || strftime("%H")<8)
+                        set background=dark
+                endif
+        else
+                set background=dark
+        endif
 endif
 
 " Conform to XDG Base Dir spec
-if ! $XDG_DATA_HOME   | let $XDG_DATA_HOME   = $HOME . '/.local/share' | endif
-if ! $XDG_DATA_DIRS   | let $XDG_DATA_DIRS   = '/usr/local/share:/usr/share' | endif
-if ! $XDG_CONFIG_HOME | let $XDG_CONFIG_HOME = $HOME . '/.config' | endif
-if ! $XDG_CONFIG_DIRS | let $XDG_CONFIG_DIRS = '/etc/xdg' | endif
-if ! $XDG_STATE_HOME  | let $XDG_STATE_HOME  = $HOME . '/.local/state' | endif
-if ! $XDG_CACHE_HOME  | let $XDG_CACHE_HOME  = $HOME . '/.cache' | endif
+let s:xdg_defaults = {
+        \ 'XDG_DATA_HOME':   $HOME . '/.local/share',
+        \ 'XDG_DATA_DIRS':   '/usr/local/share:/usr/share',
+        \ 'XDG_CONFIG_HOME': $HOME . '/.config',
+        \ 'XDG_CONFIG_DIRS': '/etc/xdg',
+        \ 'XDG_STATE_HOME':  $HOME . '/.local/state',
+        \ 'XDG_CACHE_HOME':  $HOME . '/.cache',
+\ }
+for key in keys(s:xdg_defaults)
+        if ! exists('$' . key)
+                execute 'let $' . key . ' = s:xdg_defaults[key]'
+        endif
+endfor
+
+set backupdir=$XDG_CACHE_HOME/vim/backup
+set directory=$XDG_CACHE_HOME/vim/swap
+set undodir=$XDG_CACHE_HOME/vim/undo
+set viewdir=$XDG_DATA_HOME/vim/view
+if exists('*mkdir')
+        for dir in [&backupdir, &directory, &undodir, &viewdir,]
+                if ! isdirectory(dir)
+                        call mkdir(dir, 'p')
+                endif
+        endfor
+endif
 
 set runtimepath^=$XDG_CONFIG_HOME/vim
 set runtimepath+=$XDG_DATA_HOME/vim
 set runtimepath+=$XDG_CONFIG_HOME/vim/after
 
-set packpath^=$XDG_DATA_HOME/vim,$XDG_CONFIG_HOME/vim
-set packpath+=$XDG_CONFIG_HOME/vim/after,$XDG_DATA_HOME/vim/after
+if exists('+packpath')
+        set packpath^=$XDG_DATA_HOME/vim,$XDG_CONFIG_HOME/vim
+        set packpath+=$XDG_CONFIG_HOME/vim/after,$XDG_DATA_HOME/vim/after
+endif
 
-let g:netrw_home = $XDG_DATA_HOME."/vim"
-call mkdir($XDG_DATA_HOME."/vim/spell", 'p')
+let g:netrw_home = $XDG_DATA_HOME . "/vim"
 
-set backupdir=$XDG_CACHE_HOME/vim/backup | call mkdir(&backupdir, 'p')
-set directory=$XDG_CACHE_HOME/vim/swap   | call mkdir(&directory, 'p')
-set undodir=$XDG_CACHE_HOME/vim/undo     | call mkdir(&undodir,   'p')
-set viewdir=$XDG_DATA_HOME/vim/view      | call mkdir(&viewdir,   'p')
-
-if !has('nvim') | set viminfofile=$XDG_CACHE_HOME/vim/viminfo | endif
-
-" Put all temporary files under the same directory.
-" https://github.com/mhinz/vim-galore#temporary-files
-" Modified to support the XDG Base Dir spec conform
-"set backup
-"set backupdir   =$HOME/.vim/files/backup/
-"set backupext   =-vimbackup
-"set backupskip  =
-"set directory   =$HOME/.vim/files/swap//
-"set updatecount =100
-"set undofile
-"set undodir     =$HOME/.vim/files/undo/
-"set viminfo     ='100,n$HOME/.vim/files/info/viminfo
-
-"set number  " Line numbers
+if ! has('nvim')
+        if exists('+viminfofile')
+                set viminfofile=$XDG_CACHE_HOME/vim/viminfo
+        else
+                set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
+        endif
+endif
