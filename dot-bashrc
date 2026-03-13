@@ -22,33 +22,52 @@ if [[ "$color_prompt" = 'yes' ]]; then
         # Original
         #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\]\$ '
 
-        # No username
-        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\h\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\]\$ '
+        PS1=
 
         # Add container ID if in container
         if [[ -n "$CONTAINER_ID" ]]; then
-                PS1="\[\033[01;32m\]${CONTAINER_ID}📦\[\033[00m\]${PS1}"
+                PS1+="\[\033[01;32m\]${CONTAINER_ID}📦\[\033[00m\]"
         fi
+
+        PS1+="${debian_chroot:+($debian_chroot)}"
+
+        # Show user@hostname if not in tmux
+        if [[ -z "$TMUX" ]]; then
+                PS1+='\[\033[01;32m\]\u@\h\[\033[00m\] '
+        fi
+
+        # Common prompt
+        PS1+='\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
         # Original
         #PS1='${debian_chroot:+($debian_chroot)}\u@\h \w\$ '
 
-        # No username
-        PS1='${debian_chroot:+($debian_chroot)}\h \w\$ '
+        PS1=
 
         # Add container ID if in container
-        if [[ -n "$CONTAINER_ID" ]]; then
-                PS1="$CONTAINER_ID📦$PS1"
+        if [[ -n $CONTAINER_ID ]]; then
+                PS1+="${CONTAINER_ID}📦"
         fi
+
+        PS1+="${debian_chroot:+($debian_chroot)}"
+
+        # Show user@hostname if not in tmux
+        if [[ -z $TMUX ]]; then
+                PS1+='\u@\h '
+        fi
+
+        # Common prompt
+        PS1+='\w\$ '
 fi
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to PWD
 case "$TERM" in
-xterm*|rxvt*|tmux*|screen*)
+xterm*|rxvt*|tmux*|screen*|ghostty*)
     #PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h  \w\a\]$PS1"
+
     # Just show the PWD
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)  }\w\$\a\]$PS1"
+    PS1="\[\e]0;(${debian_chroot:+($debian_chroot)}\w\$)\a\]$PS1"
     ;;
 *)
     ;;
@@ -73,7 +92,7 @@ fi
 shopt -s checkwinsize
 
 # Automatically trim long paths in the prompt (requires Bash 4.x)
-PROMPT_DIRTRIM=2
+PROMPT_DIRTRIM=3
 
 # Enable history expansion with space
 # E.g. typing !!<space> will replace the !! with your last command
