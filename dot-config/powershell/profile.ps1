@@ -20,6 +20,15 @@ Set-PSReadLineOption @PSReadLineOptions
 
 Set-PSReadLineKeyHandler -Key Tab -Function Complete
 
+$WeirdTerms = @(
+    'xterm.*'
+    'tmux.*'
+)
+if ($IsLinux -and ($ENV:TERM | Select-String -Pattern $WeirdTerms)) {
+    Set-PSReadLineKeyHandler -Key 'Ctrl+Backspace' -Function 'BackwardDeleteChar'
+    Set-PSReadLineKeyHandler -Key 'Backspace' -Function 'BackwardKillWord'
+}
+
 # Better prompt
 function Prompt {
     # Original prompt for referencing purposes
