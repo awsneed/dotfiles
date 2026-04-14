@@ -66,8 +66,7 @@ case "$TERM" in
 xterm*|rxvt*|tmux*|screen*|ghostty*)
     #PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h  \w\a\]$PS1"
 
-    # Just show the PWD
-    PS1="\[\e]0;(${debian_chroot:+($debian_chroot)}\w\$)\a\]$PS1"
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot) }\W\$ - \s\a\]$PS1"
     ;;
 *)
     ;;
@@ -194,6 +193,9 @@ alias view-authpriv-sudo_attempts="view-authpriv |  grep -i -e 'sudo:session' -e
 # SSSD logs convenience
 alias view-sssd-logs="sudo bash -c 'tail -n +0 -F /var/log/sssd/*.log'"
 alias view-most-logs="sudo bash -c 'tail -n +0 -F /var/log/*.log'"
+
+# gp-saml-gui to connect to campus VPN
+alias uarkvpn="gp-saml-gui --allow-insecure-crypto -S go.secure.uark.edu"
 
 # Host-specific config handling
 [[ -f "$HOME/.bashrc.local" ]] && . "$HOME/.bashrc.local"
