@@ -1,8 +1,15 @@
+! Enables XTerm to use the XTerm-color app-defaults file instead of just XTerm
 *customization: -color
+
+! Application name is xterm; classes under that are XTerm and UXTerm. Stick with
+! just 'xterm' at the start to affect both
 xterm*faceName: Source Code Pro
 xterm*faceSize: 15
-xterm.vt100.saveLines: 4096
+xterm*saveLines: 4096
+
+! The default in XTerm-color is on, which makes bold characters also use a
+! different color. Bold should just be bold but same color IMO.
 xterm*boldColors: false
 
 ! Selenized color scheme for xterm
-# include "/home/awsneed/src/github.com/jan-warchol/selenized/terminals/xterm/selenized-white.xdefaults" 
+#include "/home/awsneed/src/github.com/jan-warchol/selenized/terminals/xterm/selenized-black.xdefaults" 
