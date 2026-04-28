@@ -53,6 +53,9 @@ if &term !~# 'linux$'
         endif
 endif
 
+" Custom title string handling
+set titlestring=%t%M\ -\ VIM
+
 " Fixing cursor shape on enter
 augroup ResetCursorShape
         autocmd!
