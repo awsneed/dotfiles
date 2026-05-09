@@ -200,21 +200,15 @@ alias uarkvpn="gp-saml-gui --allow-insecure-crypto -S go.secure.uark.edu"
 # Host-specific config handling
 [[ -f "$HOME/.bashrc.local" ]] && . "$HOME/.bashrc.local"
 
-# Attach to or create a default tmux session
+# Auto create a new session in a tmux session group
 if type -t tmux >/dev/null && [[ -z "$TMUX" ]]; then
-        # Default
-        session='0'
+        TMUX_SESSION_GROUP='0'
 
-        # Custom session names for weird terminal hosts
+        # Custom groups for weird terminal hosts
         case $TERM_PROGRAM in
-                vscode) session="$TERM_PROGRAM" ;;
+                vscode) TMUX_SESSION_GROUP="$TERM_PROGRAM" ;;
         esac
 
-        # Create if not existing then attach
-        echo "Launching tmux session '$session'..."
-        tmux new-session -A -s "$session" || \
-                tmux attach-session -t "$session" || \
-                tmux new-session -s "$session" || \
-                echo "Failed to attach or start session '$session'!"
+        printf 'Launching tmux session in group %s... ' "$TMUX_SESSION_GROUP"
+        tmux new-session -t "$TMUX_SESSION_GROUP"
 fi
-
