@@ -13,6 +13,16 @@ if [[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
+# dircolors
+# Probably needs to run on each bashrc in case terminal changes (tmux or GUI
+# login)
+if command -v dircolors >/dev/null; then
+        eval "$(dircolors -b "$HOME/.dircolors" 2>/dev/null || dircolors -b)"
+
+        # fix dircolors for Selenized
+        LS_COLORS="$LS_COLORS:ow=1;7;34:st=30;44:su=30;41"
+fi
+
 # Determine color support
 if type -t tput >/dev/null && [[ $(tput colors) -ge 8 ]]; then
         color_prompt='yes'

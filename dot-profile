@@ -76,14 +76,6 @@ if [ -f "/opt/homebrew/bin/lesspipe.sh" ]; then
         LESSOPEN="|/opt/homebrew/bin/lesspipe.sh %s"; export LESSOPEN
 fi
 
-# dircolors
-if command -v dircolors >/dev/null && [ -r "$HOME/.dircolors" ]; then
-        eval "$(dircolors -b "$HOME/.dircolors")" || eval "$(dircolors -b)"
-fi
-
-# fix dircolors for Selenized
-export LS_COLORS="$LS_COLORS:ow=1;7;34:st=30;44:su=30;41"
-
 # homebrew macOS: ncurses terminfo
 if [ -d "/opt/homebrew/opt/ncurses/share/terminfo" ]; then
         TERMINFO_DIRS="/opt/homebrew/opt/ncurses/share/terminfo"; export TERMINFO_DIRS
