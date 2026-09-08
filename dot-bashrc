@@ -204,8 +204,8 @@ alias view-authpriv-sudo_attempts="view-authpriv |  grep -i -e 'sudo:session' -e
 alias view-sssd-logs="sudo bash -c 'tail -n +0 -F /var/log/sssd/*.log'"
 alias view-most-logs="sudo bash -c 'tail -n +0 -F /var/log/*.log'"
 
-# gp-saml-gui to connect to campus VPN
-alias uarkvpn="gp-saml-gui --allow-insecure-crypto -S go.secure.uark.edu"
+# GlobalProtect-openconnect
+alias uarkvpn="sudo gpclient connect --hip --clean --browser default go.secure.uark.edu"
 
 # Host-specific config handling
 [[ -f "$HOME/.bashrc.local" ]] && . "$HOME/.bashrc.local"
