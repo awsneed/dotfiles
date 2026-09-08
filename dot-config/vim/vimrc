@@ -1,13 +1,16 @@
 set nocompatible           " Explicitly switch to vim mode, not vi-compatible
 
 filetype plugin indent on  " Load plugins according to detected filetype.
-syntax on                  " Enable syntax highlighting.
 
 set autoindent             " Indent according to previous line, if no plugin
-set expandtab              " Use spaces instead of tabs.
-set tabstop     =8
-set softtabstop =8         " Tab key indents by 8 spaces.
+set copyindent
+set preserveindent
+"set expandtab              " Use spaces instead of tabs.
+set noexpandtab            " Use tabs.
+set tabstop     =8         " Tab key indents by 8 spaces.
 set shiftwidth  =8         " >> indents by 8 spaces.
+set softtabstop =-1        " -1 means use the value of shiftwidth
+set smarttab
 set shiftround             " >> indents to next multiple of 'shiftwidth'.
 
 set backspace   =indent,eol,start  " Make backspace work as you would expect.
@@ -172,3 +175,6 @@ if ! has('nvim')
                 set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
         endif
 endif
+
+" Placing this last to avoid issues with other stuff maybe?
+syntax on                  " Enable syntax highlighting.
