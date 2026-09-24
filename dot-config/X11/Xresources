@@ -11,5 +11,5 @@ xterm*saveLines: 4096
 ! different color. Bold should just be bold but same color IMO.
 xterm*boldColors: false
 
-! Selenized color scheme for xterm
-#include "/home/awsneed/src/github.com/jan-warchol/selenized/terminals/xterm/selenized-black.xdefaults" 
+! Include color scheme
+# include ".Xcolors"

@@ -2,6 +2,8 @@
 # ~/.profile: executed by the command interpreter for login shells.
 # This should stay shell-agnostic, so aim for sh-compatible
 
+echo '~/.profile'
+
 PROFILE_READS=$(( PROFILE_READS + 1 ))
 export PROFILE_READS
 

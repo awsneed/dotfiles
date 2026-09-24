@@ -1,6 +1,8 @@
 # shellcheck shell=bash
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
+echo "${BASH_SOURCE/$HOME/\~}"
+
 (( BASHRC_READS++ ))
 export BASHRC_READS
 
@@ -206,6 +208,10 @@ alias view-most-logs="sudo bash -c 'tail -n +0 -F /var/log/*.log'"
 
 # GlobalProtect-openconnect
 alias uarkvpn="sudo gpclient connect --hip --clean --browser default go.secure.uark.edu"
+
+# Switch X11 theme
+alias light-mode='pushd ~ >/dev/null && { ln -s --force src/github.com/jan-warchol/selenized/terminals/xterm/selenized-white.xdefaults .Xcolors && xrdb -merge .Xresources; popd >/dev/null; }'
+alias dark-mode='pushd ~  >/dev/null && { ln -s --force src/github.com/jan-warchol/selenized/terminals/xterm/selenized-black.xdefaults .Xcolors && xrdb -merge .Xresources; popd >/dev/null; }'
 
 # Host-specific config handling
 [[ -f "$HOME/.bashrc.local" ]] && . "$HOME/.bashrc.local"
