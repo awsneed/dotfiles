@@ -18,7 +18,7 @@ fi
 # dircolors
 # Probably needs to run on each bashrc in case terminal changes (tmux or GUI
 # login)
-if command -v dircolors >/dev/null; then
+if type -t dircolors >/dev/null; then
         eval "$(dircolors -b "$HOME/.dircolors" 2>/dev/null || dircolors -b)"
 
         # fix dircolors for Selenized
@@ -207,11 +207,50 @@ alias view-sssd-logs="sudo bash -c 'tail -n +0 -F /var/log/sssd/*.log'"
 alias view-most-logs="sudo bash -c 'tail -n +0 -F /var/log/*.log'"
 
 # GlobalProtect-openconnect
-alias uarkvpn="sudo gpclient connect --hip --clean --browser default go.secure.uark.edu"
+#alias uarkvpn="sudo gpclient connect --hip --clean --browser default go.secure.uark.edu &; fg"
+uarkvpn () {
+	cookie=$(gpauth go.secure.uark.edu --browser 2>/dev/null)
+	sudo gpclient connect --cookie-on-stdin go.secure.uark.edu --hip <<<$cookie
+}
 
 # Switch X11 theme
 alias light-mode='pushd ~ >/dev/null && { ln -s --force src/github.com/jan-warchol/selenized/terminals/xterm/selenized-white.xdefaults .Xcolors && xrdb -merge .Xresources; popd >/dev/null; }'
 alias dark-mode='pushd ~  >/dev/null && { ln -s --force src/github.com/jan-warchol/selenized/terminals/xterm/selenized-black.xdefaults .Xcolors && xrdb -merge .Xresources; popd >/dev/null; }'
+
+# Tumbleweed man-online backup
+if { ! type -t man >/dev/null; } && type -t man-online >/dev/null; then
+	alias man=man-online
+fi
+
+# Flatpak aliasing
+if [[ -n "$FLATPAK_EXPORTS_DIRS" ]]; then
+	nullglob="$({ shopt -p nullglob >/dev/null; echo $?; })"
+
+	shopt -s nullglob
+	while read -r -d ':'; do
+		for file in "$REPLY"/*; do
+			shortname="${file##*.}"
+			shortname="${shortname,,}"
+			alias "$shortname"="${file##*/}"
+		done
+	done <<< $FLATPAK_EXPORTS_DIRS:
+
+	(( nullglob == 1 )) && shopt -u nullglob
+	unset nullglob
+fi
+
+# Re-check for vim after Flatpak aliasing
+if type -t vim >/dev/null; then
+	VISUAL='vim'
+	EDITOR='vim -E'
+fi
+
+# Auto-refresh Xresources
+Xresources="$HOME/.Xresources"
+if [[ -f "$Xresources" ]] && type -t xrdb >/dev/null; then
+	xrdb -merge "$Xresources"
+fi
+unset Xresources
 
 # Host-specific config handling
 [[ -f "$HOME/.bashrc.local" ]] && . "$HOME/.bashrc.local"

@@ -58,6 +58,23 @@ if [ -d "/opt/local/sbin" ]; then
         PATH="/opt/local/sbin:$PATH"; export PATH
 fi
 
+# Flatpak
+flatpak_exports_system="/var/lib/flatpak/exports/bin"
+flatpak_exports_user="$HOME/.local/share/flatpak/exports/bin"
+if [ -d "$flatpak_exports_system" ]; then
+	FLATPAK_EXPORTS_DIRS="$flatpak_exports_system"
+fi
+if [ -d "$flatpak_exports_user" ]; then
+	[ -n "$FLATPAK_EXPORTS_DIRS" ] && FLATPAK_EXPORTS_DIRS=:"$FLATPAK_EXPORTS_DIRS"
+	FLATPAK_EXPORTS_DIRS="$flatpak_exports_user""$FLATPAK_EXPORTS_DIRS"
+fi
+if [ -n "$FLATPAK_EXPORTS_DIRS" ]; then
+	PATH="$FLATPAK_EXPORTS_DIRS":"$PATH"
+fi
+export FLATPAK_EXPORTS_DIRS
+unset flatpak_exports_system
+unset flatpak_exports_user
+
 # homebrew macOS
 if [ -x "/opt/homebrew/bin/brew" ]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -111,6 +128,13 @@ if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ] && [ -z "$SSH_CONNECTION" ]; then
         SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
         export SSH_AUTH_SOCK
 fi
+
+# Xresources
+Xresources="$HOME/.Xresources"
+if [ -f "$Xresources" ] && command -v xrdb >/dev/null; then
+	xrdb -merge "$Xresources"
+fi
+unset Xresources
 
 ## Host-specific config handling
 # Leave this at the end
