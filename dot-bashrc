@@ -36,16 +36,21 @@ if [[ "$color_prompt" = 'yes' ]]; then
 
         PS1=
 
-        # Add container ID if in container
-        if [[ -n "$CONTAINER_ID" ]]; then
-                PS1+="\[\033[01;32m\]${CONTAINER_ID}📦\[\033[00m\]"
-        fi
-
         PS1+="${debian_chroot:+($debian_chroot)}"
 
         # Show user@hostname if not in tmux
         if [[ -z "$TMUX" ]]; then
-                PS1+='\[\033[01;32m\]\u@\h\[\033[00m\] '
+                PS1+='\[\033[01;32m\]\u@\h\[\033[00m\]'
+        fi
+
+        # Add container ID if in container
+        if [[ -n "$CONTAINER_ID" ]]; then
+                PS1+="\[\033[01;32m\]📦${CONTAINER_ID}\[\033[00m\]"
+        fi
+
+	# Add spacing if PS1 has anything
+        if [[ -n "$PS1" ]]; then
+        	PS1+=" "
         fi
 
         # Common prompt
@@ -208,14 +213,15 @@ alias view-most-logs="sudo bash -c 'tail -n +0 -F /var/log/*.log'"
 
 # GlobalProtect-openconnect
 #alias uarkvpn="sudo gpclient connect --hip --clean --browser default go.secure.uark.edu &; fg"
-uarkvpn () {
-	cookie=$(gpauth go.secure.uark.edu --browser 2>/dev/null)
-	sudo gpclient connect --cookie-on-stdin go.secure.uark.edu --hip <<<$cookie
-}
+alias uarkvpn='gpauth go.secure.uark.edu --browser 2>/dev/null | sudo gpclient connect --cookie-on-stdin go.secure.uark.edu'
+#uarkvpn () {
+	#cookie=$(gpauth go.secure.uark.edu --browser 2>/dev/null)
+	#sudo gpclient connect --cookie-on-stdin go.secure.uark.edu <<<$cookie
+#}
 
 # Switch X11 theme
-alias light-mode='pushd ~ >/dev/null && { ln -s --force src/github.com/jan-warchol/selenized/terminals/xterm/selenized-white.xdefaults .Xcolors && xrdb -merge .Xresources; popd >/dev/null; }'
-alias dark-mode='pushd ~  >/dev/null && { ln -s --force src/github.com/jan-warchol/selenized/terminals/xterm/selenized-black.xdefaults .Xcolors && xrdb -merge .Xresources; popd >/dev/null; }'
+alias light-mode="pushd ~ >/dev/null && { ln -s --force src/github.com/jan-warchol/selenized/terminals/xterm/selenized-white.xdefaults .Xcolors; popd >/dev/null; }"
+alias  dark-mode="pushd ~ >/dev/null && { ln -s --force src/github.com/jan-warchol/selenized/terminals/xterm/selenized-black.xdefaults .Xcolors; popd >/dev/null; }"
 
 # Tumbleweed man-online backup
 if { ! type -t man >/dev/null; } && type -t man-online >/dev/null; then
