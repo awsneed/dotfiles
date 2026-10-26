@@ -42,7 +42,7 @@ fi
 
 # Add .NET Core SDK tools
 if [ -d "$HOME/.dotnet/tools" ]; then
-        PATH="/home/awsneed/.dotnet/tools:$PATH"; export PATH
+        PATH="$HOME/.dotnet/tools:$PATH"; export PATH
 fi
 
 # homebrew macOS: llvm
