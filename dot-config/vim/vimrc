@@ -116,6 +116,10 @@ autocmd FileType ps1,psd,powershell setlocal ts=4 sts=4 sw=4 expandtab textwidth
 
 set cc=+1                  " Highlight the column after textwidth
 
+if get(terminalprops(), 'rgb', 'n') == 'y'
+	set termguicolors
+endif
+
 " Selenized (better Solarized)
 silent! colorscheme selenized_bw
 
