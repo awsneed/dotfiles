@@ -131,7 +131,7 @@ fi
 
 # Xresources
 Xresources="$HOME/.Xresources"
-if [ -f "$Xresources" ] && command -v xrdb >/dev/null; then
+if [ -f "$Xresources" ] && [ -n "$DISPLAY" ] && command -v xrdb >/dev/null; then
 	xrdb -merge "$Xresources"
 fi
 unset Xresources

@@ -1,3 +1,6 @@
+! Show string conversion errors
+*StringConversionWarnings: on
+
 ! Enables XTerm to use the XTerm-color app-defaults file instead of just XTerm
 *customization: -color
 
@@ -10,6 +13,19 @@ xterm*saveLines: 4096
 ! The default in XTerm-color is on, which makes bold characters also use a
 ! different color. Bold should just be bold but same color IMO.
 xterm*boldColors: false
+! Similar but for italics and underlining
+xterm*colorITMode: false
+xterm*colorULMode: false
 
-! Include color scheme
-# include ".Xcolors"
+! Make sure directColor support is enabled
+xterm*directColor: true
+
+! Underline characters should display as underlined, not italic
+xterm*italicULMode: false
+
+! Uncommented stuff
+xterm*underLine: true
+xterm*utf8: true
+
+! Force no scrollbar(s)
+xterm*scrollBar: false
