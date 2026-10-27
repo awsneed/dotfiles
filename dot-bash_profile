@@ -6,7 +6,7 @@ echo "${BASH_SOURCE/$HOME/\~}"
 (( BASH_PROFILE_READS++ ))
 export BASH_PROFILE_READS
 
-if [[ "$BASH_PROFILE_READS" -gt 1 ]]; then
+if [[ "$BASH_PROFILE_READS" -gt 1 ]] && [[ -z $CONTAINER_ID ]]; then
         echo 'WARNING: .bash_profile has been sourced more than once!'
 fi
 

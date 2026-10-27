@@ -7,7 +7,7 @@ echo '~/.profile'
 PROFILE_READS=$(( PROFILE_READS + 1 ))
 export PROFILE_READS
 
-if [ "$PROFILE_READS" -gt 1 ]; then
+if [ "$PROFILE_READS" -gt 1 ] && [ -z $CONTAINER_ID ]; then
         echo 'WARNING: .profile has been sourced more than once!'
 fi
 
