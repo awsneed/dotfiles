@@ -251,6 +251,11 @@ if type -t vim >/dev/null; then
 	EDITOR='vim -E'
 fi
 
+# Distrobox & tmux friendly container switch alias
+if type -t distrobox-host-exec >/dev/null && [[ -n $CONTAINER_ID ]]; then
+	alias distrobox-switch='distrobox-host-exec distrobox enter --additional-flags "--env TMUX=$TMUX"'
+fi
+
 # Auto-refresh Xresources
 Xresources="$HOME/.Xresources"
 if [[ -f "$Xresources" ]] && type -t xrdb >/dev/null; then
