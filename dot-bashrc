@@ -272,3 +272,28 @@ if type -t tmux >/dev/null && [[ -z "$TMUX" ]]; then
         printf 'Launching tmux session in group %s... ' "$TMUX_SESSION_GROUP"
         tmux new-session -t "$TMUX_SESSION_GROUP"
 fi
+
+# PATH de-dupe shenanigans
+IFS=':'
+path_array=($PATH)
+unset IFS
+
+PATH=
+
+declare -A path_table
+i=0
+for path in "${path_array[@]}"; do
+	((i++))
+	if [[ ${path_table[$path]} -eq 0 ]]; then
+		path_table[$path]=$i
+	fi
+done
+for path in "${!path_table[@]}"; do
+	new_path[${path_table[$path]}]=$path
+done
+
+IFS=':'
+PATH="${new_path[*]}"
+unset IFS
+
+unset path_array path_table new_path i
