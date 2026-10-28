@@ -11,51 +11,61 @@ if [ "$PROFILE_READS" -gt 1 ] && [ -z $CONTAINER_ID ]; then
         echo 'WARNING: .profile has been sourced more than once!'
 fi
 
+pathmunge () {
+	if ! echo $PATH | /bin/egrep -q "(^|:)$1($|:)" ; then
+		if [ "$2" = "after" ] ; then
+			PATH=$PATH:$1
+		else
+			PATH=$1:$PATH
+		fi
+	fi
+}
+
 # User binaries
 if [ -d "$HOME/.local/bin" ]; then
-        PATH="$HOME/.local/bin:$PATH"; export PATH
+	pathmunge "$HOME/.local/bin"
 fi
 
 if [ -d "$HOME/bin" ] ; then
-        PATH="$HOME/bin:$PATH"; export PATH
+	pathmunge "$HOME/bin"
 fi
 
 # System local admin install of go
 if [ -d "/usr/local/go/bin" ]; then
-        PATH="/usr/local/go/bin:$PATH"; export PATH
+	pathmunge '/usr/local/go/bin'
 fi
 
 # homebrew macOS: man-db
 if [ -d "/opt/homebrew/opt/man-db/libexec/bin" ]; then
-        PATH="/opt/homebrew/opt/man-db/libexec/bin:$PATH"; export PATH
+	pathmunge '/opt/homebrew/opt/man-db/libexec/bin'
 fi
 
 # homebrew macOS: coreutils
 if [ -d "/opt/homebrew/opt/coreutils/libexec/gnubin" ]; then
-        PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"; export PATH
+	pathmunge "/opt/homebrew/opt/coreutils/libexec/gnubin"
 fi
 
 # homebrew macOS: ncurses
 if [ -d "/opt/homebrew/opt/ncurses/bin" ]; then
-        PATH="/opt/homebrew/opt/ncurses/bin:$PATH"; export PATH
+	pathmunge "/opt/homebrew/opt/ncurses/bin"
 fi
 
 # Add .NET Core SDK tools
 if [ -d "$HOME/.dotnet/tools" ]; then
-        PATH="$HOME/.dotnet/tools:$PATH"; export PATH
+	pathmunge "$HOME/.dotnet/tools"
 fi
 
 # homebrew macOS: llvm
 if [ -d "/opt/homebrew/opt/llvm/bin" ]; then
-        PATH="/opt/homebrew/opt/llvm/bin:$PATH"; export PATH
+	pathmunge "/opt/homebrew/opt/llvm/bin"
 fi
 
 # MacPorts
 if [ -d "/opt/local/bin" ]; then
-        PATH="/opt/local/bin:$PATH"; export PATH
+	pathmunge "/opt/local/bin"
 fi
 if [ -d "/opt/local/sbin" ]; then
-        PATH="/opt/local/sbin:$PATH"; export PATH
+	pathmunge "/opt/local/sbin"
 fi
 
 # Flatpak
@@ -69,7 +79,7 @@ if [ -d "$flatpak_exports_user" ]; then
 	FLATPAK_EXPORTS_DIRS="$flatpak_exports_user""$FLATPAK_EXPORTS_DIRS"
 fi
 if [ -n "$FLATPAK_EXPORTS_DIRS" ]; then
-	PATH="$FLATPAK_EXPORTS_DIRS":"$PATH"
+	pathmunge "$FLATPAK_EXPORTS_DIRS"
 fi
 export FLATPAK_EXPORTS_DIRS
 unset flatpak_exports_system
