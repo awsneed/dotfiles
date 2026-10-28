@@ -1,7 +1,7 @@
 # shellcheck shell=bash
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
-echo "${BASH_SOURCE/$HOME/\~}"
+echo "${BASH_SOURCE/$HOME/"~"}"
 
 (( BASHRC_READS++ ))
 export BASHRC_READS
