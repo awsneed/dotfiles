@@ -214,11 +214,16 @@ alias view-most-logs="sudo bash -c 'tail -n +0 -F /var/log/*.log'"
 # GlobalProtect-openconnect
 #alias uarkvpn="sudo gpclient connect --hip --clean --browser default go.secure.uark.edu &; fg"
 #alias uarkvpn='gpauth go.secure.uark.edu --browser 2>/dev/null | sudo gpclient connect --cookie-on-stdin go.secure.uark.edu'
-alias uarkvpn='sudo podman run --rm -it --privileged --network=host --cap-add=NET_ADMIN --device=/dev/net/tun --volume=/etc/resolv.conf:/etc/resolv.conf yuezk/globalprotect-openconnect connect go.secure.uark.edu --browser remote'
 #uarkvpn () {
 	#cookie=$(gpauth go.secure.uark.edu --browser 2>/dev/null)
 	#sudo gpclient connect --cookie-on-stdin go.secure.uark.edu <<<$cookie
 #}
+
+if [[ -z $CONTAINER_ID ]]; then
+	alias uarkvpn='sudo podman run --rm -it --privileged --network=host --cap-add=NET_ADMIN --device=/dev/net/tun --volume=/etc/resolv.conf:/etc/resolv.conf yuezk/globalprotect-openconnect connect go.secure.uark.edu --browser remote'
+else
+	alias uarkvpn='distrobox-host-exec sudo podman run --rm -it --privileged --network=host --cap-add=NET_ADMIN --device=/dev/net/tun --volume=/etc/resolv.conf:/etc/resolv.conf yuezk/globalprotect-openconnect connect go.secure.uark.edu --browser remote'
+fi
 
 # Switch X11 theme
 alias light-mode="pushd ~ >/dev/null && { ln -s --force src/github.com/jan-warchol/selenized/terminals/xterm/selenized-white.xdefaults .Xcolors; popd >/dev/null; }"
