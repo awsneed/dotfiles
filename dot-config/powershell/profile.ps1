@@ -24,9 +24,13 @@ $WeirdTerms = @(
     'xterm.*'
     'tmux.*'
 )
-if ($IsLinux -and ($ENV:TERM | Select-String -Pattern $WeirdTerms)) {
+if ($IsLinux -and ($ENV:TERM | Select-String -Pattern $WeirdTerms) -and $ENV:TERM_PROGRAM -ne 'vscode') {
     Set-PSReadLineKeyHandler -Key 'Ctrl+Backspace' -Function 'BackwardDeleteChar'
     Set-PSReadLineKeyHandler -Key 'Backspace' -Function 'BackwardKillWord'
+} else {
+    Set-PSReadLineKeyHandler -Key   'Backspace'      -Function 'BackwardDeleteChar'
+    Set-PSReadLineKeyHandler -Key   'Ctrl+Backspace' -Function 'BackwardKillWord'
+    Set-PSReadLineKeyHandler -Chord 'Ctrl+w'         -Function 'BackwardKillWord'
 }
 
 # Better prompt

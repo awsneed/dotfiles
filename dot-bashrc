@@ -1,14 +1,14 @@
 # shellcheck shell=bash
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
-echo "${BASH_SOURCE/$HOME/"~"}"
-
 (( BASHRC_READS++ ))
 export BASHRC_READS
 
 ## MISC (primarily from Debian) ##
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
+
+echo "${BASH_SOURCE/$HOME/"~"}"
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]]; then
@@ -256,6 +256,9 @@ if type -t distrobox-host-exec >/dev/null && [[ -n $CONTAINER_ID ]]; then
 	alias distrobox-switch='distrobox-host-exec distrobox enter --additional-flags "--env TMUX=$TMUX"'
 fi
 
+if type -p dotnet >/dev/null; then
+	eval "$(dotnet completions script bash)"
+fi
 
 # Host-specific config handling
 [[ -f "$HOME/.bashrc.local" ]] && . "$HOME/.bashrc.local"
@@ -277,7 +280,6 @@ fi
 IFS=':'
 path_array=($PATH)
 unset IFS
-
 PATH=
 
 declare -A path_table

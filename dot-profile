@@ -11,8 +11,12 @@ if [ "$PROFILE_READS" -gt 1 ] && [ -z $CONTAINER_ID ]; then
         echo 'WARNING: .profile has been sourced more than once!'
 fi
 
+################################################################################
+# <PATH-related settings> ######################################################
+################################################################################
+
 pathmunge () {
-	if ! echo $PATH | /bin/egrep -q "(^|:)$1($|:)" ; then
+	if ! echo $PATH | /usr/bin/grep -E -q "(^|:)$1($|:)" ; then
 		if [ "$2" = "after" ] ; then
 			PATH=$PATH:$1
 		else
@@ -84,6 +88,13 @@ fi
 export FLATPAK_EXPORTS_DIRS
 unset flatpak_exports_system
 unset flatpak_exports_user
+
+################################################################################
+# </PATH-related settings> #####################################################
+################################################################################
+
+POWERSHELL_TELEMETRY_OPTOUT=1; export POWERSHELL_TELEMETRY_OPTOUT
+DOTNET_CLI_TELEMETRY_OPTOUT=1; export DOTNET_CLI_TELEMETRY_OPTOUT
 
 # homebrew macOS
 if [ -x "/opt/homebrew/bin/brew" ]; then
