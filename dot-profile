@@ -150,12 +150,9 @@ if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ] && [ -z "$SSH_CONNECTION" ]; then
         export SSH_AUTH_SOCK
 fi
 
-# Xresources
-Xresources="$HOME/.Xresources"
-if [ -f "$Xresources" ] && [ -n "$DISPLAY" ] && command -v xrdb >/dev/null; then
-	xrdb -merge "$Xresources"
+if ! [ -f "$HOME/.Xdefaults-$HOSTNAME" ]; then
+	echo '# include ".Xresources" ' >"$HOME/.Xdefaults-$HOSTNAME"
 fi
-unset Xresources
 
 ## Host-specific config handling
 # Leave this at the end

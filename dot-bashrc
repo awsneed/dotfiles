@@ -225,9 +225,9 @@ else
 	alias uarkvpn='distrobox-host-exec sudo podman run --rm -it --privileged --network=host --cap-add=NET_ADMIN --device=/dev/net/tun --volume=/etc/resolv.conf:/etc/resolv.conf yuezk/globalprotect-openconnect connect go.secure.uark.edu --browser remote'
 fi
 
-# Switch X11 theme
-alias light-mode="pushd ~ >/dev/null && { ln -s --force src/github.com/jan-warchol/selenized/terminals/xterm/selenized-white.xdefaults .Xcolors; popd >/dev/null; }"
-alias  dark-mode="pushd ~ >/dev/null && { ln -s --force src/github.com/jan-warchol/selenized/terminals/xterm/selenized-black.xdefaults .Xcolors; popd >/dev/null; }"
+# Switch X11 theme aliases
+alias light-mode='sed -i s/black/white/g "$HOME/.Xdefaults-$HOSTNAME"'
+alias  dark-mode='sed -i s/white/black/g "$HOME/.Xdefaults-$HOSTNAME"'
 
 # Tumbleweed man-online backup
 if { ! type -t man >/dev/null; } && type -t man-online >/dev/null; then
