@@ -226,8 +226,8 @@ else
 fi
 
 # Switch X11 theme aliases
-alias light-mode='sed -i s/black/white/g "$HOME/.Xdefaults-$HOSTNAME"'
-alias  dark-mode='sed -i s/white/black/g "$HOME/.Xdefaults-$HOSTNAME"'
+alias light-mode='sed -i -e s/black/white/g -e s/dark/light/g "$HOME/.Xdefaults-$HOSTNAME"'
+alias  dark-mode='sed -i -e s/white/black/g -e s/dark/light/g "$HOME/.Xdefaults-$HOSTNAME"'
 
 # Tumbleweed man-online backup
 if { ! type -t man >/dev/null; } && type -t man-online >/dev/null; then
